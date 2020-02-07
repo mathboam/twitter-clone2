@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/SearchScreen';
+import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const config = Platform.select({
@@ -25,31 +25,16 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name="ios-home"
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
     />
   ),
 };
 
-
-const SearchStack = createStackNavigator(
-  {
-    Search: SearchScreen,
-  },
-  config
-);
-
-// HomeStack.path = '';
-
-
-SearchStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name="ios-search"
-    />
-  ),
-};
+HomeStack.path = '';
 
 const LinksStack = createStackNavigator(
   {
@@ -85,8 +70,8 @@ SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  SearchScreen,
-  // SettingsStack,
+  LinksStack,
+  SettingsStack,
 });
 
 tabNavigator.path = '';
